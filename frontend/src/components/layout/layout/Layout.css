@@ -1,0 +1,27 @@
+.Layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 6fr 1fr;
+    height: 100%;
+}
+
+.Layout header {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.Layout main {
+    grid-column: 1;
+    grid-row: 2;
+    overflow-y: auto;
+}
+
+.Layout footer {
+    grid-column: 1;
+    grid-row: 3;
+}
+
+.Layout > * {
+    border: 1px solid lightblue;
+    background-color: rgb(237, 249, 237);
+}

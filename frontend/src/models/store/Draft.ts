@@ -1,7 +1,5 @@
 export default interface Draft {
     name: string
-    price: number
+    address: string
     categoryId: string
-    productionTime: string
-    expirationTime: string
 }

@@ -3,9 +3,9 @@ import Category from '../../../models/category/Category'
 import './Add.css'
 import categoriesServices from '../../../services/categories'
 import { useForm } from 'react-hook-form'
-import Draft from '../../../models/product/Draft'
-import productServices from '../../../services/products'
+import Draft from '../../../models/store/Draft'
 import { useNavigate } from 'react-router-dom'
+import storesServices from '../../../services/stores'
 
 export default function Add(): JSX.Element {
     const [categories, setCategories] = useState<Category[]>([])
@@ -27,9 +27,9 @@ export default function Add(): JSX.Element {
 
     async function submit(draft: Draft) {
         try {
-            await productServices.add(draft)
-            alert('Added Product')
-            navigate('/products/list')
+            const newStore = await storesServices.add(draft)
+            alert('Added Store')
+            navigate('/stores/list', { state: { newStoreId: newStore.id } })
         } catch (error) {
             alert(error)
         }
@@ -37,7 +37,7 @@ export default function Add(): JSX.Element {
     return (
         <div className='Add'>
             <form onSubmit={handleSubmit(submit)}>
-                <input placeholder='product name' {...register('name', {
+                <input placeholder='store name' {...register('name', {
                     required: {
                         value: true,
                         message: 'must enter name'
@@ -46,13 +46,13 @@ export default function Add(): JSX.Element {
                 <span className='error'>{formState.errors.name?.message}</span>
                 
 
-                <input type="number" placeholder='price' {...register('price', {
+                <input placeholder='address' {...register('address', {
                     required: {
                         value: true,
-                        message: 'must enter price'
+                        message: 'must enter address'
                     }
                 })}/>
-                <span className='error'>{formState.errors.price?.message}</span>
+                <span className='error'>{formState.errors.address?.message}</span>
 
                 <select defaultValue={''}{...register('categoryId', {
                     required: {
@@ -65,25 +65,7 @@ export default function Add(): JSX.Element {
                 </select>
                 <span className='error'>{formState.errors.categoryId?.message}</span>
 
-                <label>Production Date:</label>
-                <input type="datetime-local" {...register('productionTime', {
-                    required: {
-                        value: true,
-                        message: 'must enter productionTime'
-                    }
-                })}/>
-                <span className='error'>{formState.errors.productionTime?.message}</span>
-
-                <label>Expiration Date:</label>
-                <input type="datetime-local" {...register('expirationTime', {
-                    required: {
-                        value: true,
-                        message: 'must enter expirationTime'
-                    }
-                })}/>
-                <span className='error'>{formState.errors.expirationTime?.message}</span>
-
-                <button>Add Product</button>
+                <button>Add Store</button>
 
             </form>
         </div>
